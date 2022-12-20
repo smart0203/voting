@@ -16,7 +16,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ("restaurant", "employee")
+    list_display = ("menu", "employee")
 
 
 admin.site.register(Restaurant, RestaurantAdmin)

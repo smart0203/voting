@@ -17,9 +17,9 @@ class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     
     def create(self, request):
-        old_menu = Menu.objects.filter(created_dt__startswith=date.today())
+        old_menu_count = Menu.objects.filter(created_dt__startswith=date.today()).count()
         serializer = MenuSerializer(data=request.data)
-        if old_menu is None:
+        if old_menu_count == 0 :
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,3 +34,13 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 class VoteViewSet(viewsets.ModelViewSet):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
+
+    def create(self, request):
+        vote_count = Vote.objects.filter(employee=request.data["employee"], menu=request.data["menu"]).count()
+        serializer = VoteSerializer(data=request.data)
+        if vote_count < 3:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+

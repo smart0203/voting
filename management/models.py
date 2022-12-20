@@ -33,7 +33,7 @@ class Employee(models.Model):
 
 
 class Vote(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)
+    menu = models.ForeignKey(Menu, on_delete = models.CASCADE, default=0)
     employee = models.ForeignKey(Employee, on_delete = models.CASCADE)
 
     created_dt = models.DateTimeField(auto_now_add=True)
