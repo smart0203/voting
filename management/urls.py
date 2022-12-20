@@ -7,8 +7,9 @@ router = DefaultRouter()
 router.register(r"restaurant", views.RestaurantViewSet, "restaurant")
 router.register(r"menu", views.MenuViewSet, "menu")
 router.register(r"employee", views.EmployeeViewSet, "employee")
-router.register(r"vote", views.VoteViewSet, "vote")
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
+    path("vote/", views.VoteCreate.as_view()),
+    path("get_currentday_menu/", views.CurrentDayMenusList.as_view())
 ]

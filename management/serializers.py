@@ -7,7 +7,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['name']
+        fields = ('name',)
 
 
 class MenuSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ['name']
+        fields = ('name',)
 
 
 class VoteSerializer(serializers.ModelSerializer):

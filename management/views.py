@@ -1,6 +1,6 @@
 from datetime import date
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 
 from .models import Restaurant, Menu, Employee, Vote
@@ -17,9 +17,9 @@ class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     
     def create(self, request):
-        old_menu_count = Menu.objects.filter(created_dt__startswith=date.today()).count()
+        old_menu_count = Menu.objects.filter(restaurant=request.data["restaurant"], created_dt__date=date.today()).count()
         serializer = MenuSerializer(data=request.data)
-        if old_menu_count == 0 :
+        if old_menu_count == 0:
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,7 +31,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
 
 
-class VoteViewSet(viewsets.ModelViewSet):
+class VoteCreate(generics.ListCreateAPIView):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
 
@@ -44,3 +44,7 @@ class VoteViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+class CurrentDayMenusList(generics.ListAPIView):
+    serializer_class = MenuSerializer
+    queryset = Menu.objects.filter(created_dt__date=date.today())
