@@ -6,9 +6,9 @@ from . import views
 router = DefaultRouter()
 router.register(r"restaurant", views.RestaurantViewSet, "restaurant")
 router.register(r"menu", views.MenuViewSet, "menu")
+router.register(r"employee", views.EmployeeViewSet, "employee")
+router.register(r"vote", views.VoteViewSet, "vote")
 
 urlpatterns = [
     path("", include(router.urls))
 ]
-
-# urlpatterns = format_suffix_patterns(urlpatterns)

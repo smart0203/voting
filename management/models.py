@@ -1,16 +1,19 @@
 from django.db import models
 
 
-
 class Restaurant(models.Model):
-    RESTAURANT_CATEGORY = (
-        ("Food", "Food"),
-        ("Drink", "Drink"),
-        ("Other", "Other")
-    )
-
     name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100, choices=RESTAURANT_CATEGORY, default="Food")
+
+    created_dt = models.DateTimeField(auto_now_add=True)
+    updated_dt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
+
+
+class Menu(models.Model):
+    restaurant = models.ForeignKey(Restaurant, related_name="restaurant", on_delete = models.CASCADE)
+    items = models.TextField()
 
     created_dt = models.DateTimeField(auto_now_add=True)
     updated_dt = models.DateTimeField(auto_now=True)
@@ -19,13 +22,22 @@ class Restaurant(models.Model):
         ordering = ['created_dt']
 
 
-class Menu(models.Model):
-    restaurant = models.ForeignKey(Restaurant, related_name="restaurant", on_delete = models.CASCADE)
-    items = models.TextField()
-    date = models.DateField(auto_now_add=True)
+class Employee(models.Model):
+    name = models.CharField(max_length=100)
 
     created_dt = models.DateTimeField(auto_now_add=True)
     updated_dt = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['name']
+
+
+class Vote(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete = models.CASCADE)
+
+    created_dt = models.DateTimeField(auto_now_add=True)
+    updated_dt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['created_dt']
