@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from management import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    # path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('login/', views.LoginView.as_view()),
+    path('signup/', views.SignupView.as_view()),
+    path('logout/', views.LogoutView.as_view()),
     path('', include('management.urls')),
     path('', RedirectView.as_view(url='/')),
 ]

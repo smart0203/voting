@@ -3,11 +3,46 @@ from datetime import date
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, permissions, views
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Restaurant, Menu, Employee, Vote
-from .serializers import RestaurantSerializer, MenuSerializer, EmployeeSerializer, VoteSerializer
+from .serializers import RestaurantSerializer, MenuSerializer, EmployeeSerializer, VoteSerializer, LoginSerializer, SignupSerializer
+
+
+class SignupView(generics.CreateAPIView):
+    """
+    Class Based View for Signup API
+    """
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = SignupSerializer
+
+
+class LoginView(TokenObtainPairView):
+    """
+    Class Based View for Login API
+    """
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = LoginSerializer
+
+
+class LogoutView(views.APIView):
+    """
+    Class Based View for Logout API
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class RestaurantViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
