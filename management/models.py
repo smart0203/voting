@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Restaurant(models.Model):
+    """
+    Represent Restaurant
+    """
     name = models.CharField(max_length=100)
 
     created_dt = models.DateTimeField(auto_now_add=True)
@@ -12,6 +15,9 @@ class Restaurant(models.Model):
 
 
 class Menu(models.Model):
+    """
+    Represent Menu
+    """
     restaurant = models.ForeignKey(Restaurant, related_name="restaurant", on_delete = models.CASCADE)
     items = models.TextField()
 
@@ -23,6 +29,9 @@ class Menu(models.Model):
 
 
 class Employee(models.Model):
+    """
+    Represent Employee
+    """
     name = models.CharField(max_length=100)
 
     created_dt = models.DateTimeField(auto_now_add=True)
@@ -33,6 +42,9 @@ class Employee(models.Model):
 
 
 class Vote(models.Model):
+    """
+    Represent Vote
+    """
     menu = models.ForeignKey(Menu, on_delete = models.CASCADE, default=0)
     employee = models.ForeignKey(Employee, on_delete = models.CASCADE)
 

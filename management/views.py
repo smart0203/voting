@@ -11,11 +11,17 @@ from .serializers import RestaurantSerializer, MenuSerializer, EmployeeSerialize
 
 
 class RestaurantViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    """
+    Class Based Viewset for Restaurant API
+    """
     serializer_class = RestaurantSerializer
     queryset = Restaurant.objects.all()
 
 
 class MenuViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    """
+    Class Based Viewset for Menu API
+    """
     serializer_class = MenuSerializer
     queryset = Menu.objects.all()
     
@@ -33,11 +39,17 @@ class MenuViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
 
 
 class EmployeeViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    """
+    Class Based Viewset for Employee API
+    """
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
 
 
 class VoteCreate(LoginRequiredMixin, generics.ListCreateAPIView):
+    """
+    Class Based Viewset for Vote API
+    """
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
 
@@ -55,11 +67,17 @@ class VoteCreate(LoginRequiredMixin, generics.ListCreateAPIView):
 
 
 class CurrentDayMenusList(LoginRequiredMixin, generics.ListAPIView):
+    """
+    Class Based APIView to Get Current Day Menus
+    """
     serializer_class = MenuSerializer
     queryset = Menu.objects.filter(created_dt__date=date.today())
 
 
 class CurrentDayResult(LoginRequiredMixin, generics.ListAPIView):
+    """
+    Class Based APIView to Get Current Day Result
+    """
     serializer_class = VoteSerializer
     
     def list(self):
