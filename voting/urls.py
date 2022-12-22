@@ -20,7 +20,6 @@ from management import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('login/', views.LoginView.as_view()),
     path('signup/', views.SignupView.as_view()),
     path('logout/', views.LogoutView.as_view()),

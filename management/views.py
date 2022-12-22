@@ -9,7 +9,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Restaurant, Menu, Employee, Vote
-from .serializers import RestaurantSerializer, MenuSerializer, EmployeeSerializer, VoteSerializer, LoginSerializer, SignupSerializer
+from .serializers import RestaurantSerializer, MenuSerializer, EmployeeSerializer,\
+    VoteSerializer, LoginSerializer, SignupSerializer
 
 
 class SignupView(generics.CreateAPIView):

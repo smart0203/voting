@@ -69,6 +69,7 @@ class SignupSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class LoginSerializer(TokenObtainPairSerializer):
     """
     This serializer defines two fields for authentication:
